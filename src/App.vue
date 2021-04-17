@@ -8,25 +8,31 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Poppins, Roboto, sans-serif;
+  min-height: $min-height;
+  max-width: $max-width;
+  margin: auto;
+  background: $bg-main;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
+  color: $dark;
+  #nav {
+    padding: 30px;
+    a {
+      font-weight: bold;
+      color: $darker;
+      &.router-link-exact-active {
+        color: $blue;
+      }
+    }
+  }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
