@@ -4,12 +4,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 <template>
   <div>
-    <p class="error">{{ error }}</p>
+    <p class="error">{{ errorMessage }} ini apaan dah</p>
 
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
 
-    <vue-qr-reader v-on:code-scanned="codeArrived" v-on:error-captured="errorCaptured">
-    </vue-qr-reader>
+    <vue-qr-reader
+    v-on:code-scanned="codeArrived"
+    v-on:error-captured="() => errorCaptured()"
+    :stop-on-scanned="true"
+    :draw-on-found="true"
+    :responsive="false" />
   </div>
 </template>
 
@@ -31,13 +35,16 @@ export default class Test extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   codeArrived(code: string): void {
-    this.result = code;
-    setTimeout(() => {
-      this.result = 'ASDADFASFDASFASD';
-    }, 15000);
+    this.fetchAPI(code);
   }
 
-  errorCaptured(error: Error): void {
+  async fetchAPI(endpoint: string): Promise<void> {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${endpoint}`);
+    const data = await response.json();
+    this.result = JSON.stringify(data);
+  }
+
+  errorCaptured(error: Error): string {
     switch (error.name) {
       case 'NotAllowedError':
         this.errorMessage = 'Camera permission denied.';
@@ -58,6 +65,7 @@ export default class Test extends Vue {
         this.errorMessage = `UNKNOWN ERROR: ${error.message}`;
     }
     console.error(this.errorMessage);
+    return this.errorMessage;
   }
 }
 </script>
