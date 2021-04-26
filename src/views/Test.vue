@@ -31,7 +31,13 @@ export default class Test extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   codeArrived(code: string): void {
-    this.result = code;
+    this.fetchAPI(code);
+  }
+
+  async fetchAPI(endpoint: string): Promise<void> {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${endpoint}`);
+    const data = await response.json();
+    this.result = JSON.stringify(data);
   }
 
   errorCaptured(error: Error): void {
