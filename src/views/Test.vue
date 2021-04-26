@@ -17,7 +17,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line import/extensions
 import VueQrReader from 'vue-qr-reader/dist/lib/vue-qr-reader.umd.js';
-import { instance } from '@/utils/axios';
+import instance from '@/utils/axios';
 
 @Component({
   components: {
