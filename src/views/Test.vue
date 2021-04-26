@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 <template>
   <div>
     <p class="error">{{ errorMessage }} ini apaan dah</p>
@@ -21,6 +17,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line import/extensions
 import VueQrReader from 'vue-qr-reader/dist/lib/vue-qr-reader.umd.js';
+import { instance } from '@/utils/axios';
 
 @Component({
   components: {
@@ -39,9 +36,8 @@ export default class Test extends Vue {
   }
 
   async fetchAPI(endpoint: string): Promise<void> {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${endpoint}`);
-    const data = await response.json();
-    this.result = JSON.stringify(data);
+    const response = await instance.get(`https://pokeapi.co/api/v2/pokemon/${endpoint}`);
+    this.result = JSON.stringify(response);
   }
 
   errorCaptured(error: Error): string {
