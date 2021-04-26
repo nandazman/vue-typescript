@@ -24,7 +24,13 @@ export default class Home extends Vue {
   public error = '';
 
   onDecode(result: string): void {
-    this.result = result;
+    this.fetchAPI(result);
+  }
+
+  async fetchAPI(endpoint: string): Promise<void> {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${endpoint}`);
+    const data = await response.json();
+    this.result = JSON.stringify(data);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
