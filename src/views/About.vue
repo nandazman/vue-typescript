@@ -4,7 +4,7 @@
 
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
 
-    <qrcode-stream @decode="onDecode" @init="onInit" />
+    <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit" />
   </div>
 </template>
 
@@ -23,8 +23,15 @@ export default class Home extends Vue {
 
   public error = '';
 
+  public camera = 'auto';
+
   onDecode(result: string): void {
+    this.turnCameraOff();
     this.fetchAPI(result);
+  }
+
+  turnCameraOff(): void {
+    this.camera = 'off';
   }
 
   async fetchAPI(endpoint: string): Promise<void> {
